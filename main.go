@@ -1,17 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	//Define um handler para a rota principal "/"
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "API de estoque rodando")
+	//cria um roteador padrão com gin
+	router := gin.Default()
+
+	//Primeiro endpoint Gin
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "API de estoque com Gin Rodando!",
+		})
 	})
 
-	fmt.Println("Servidor rodando na porta 8080")
-	//inicia o servidor na porta 8080
-	http.ListenAndServe(":8080", nil)
+	//Roda o servidor na porta 8080
+	router.Run(":8080")
 }
